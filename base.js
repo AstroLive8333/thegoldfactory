@@ -78,9 +78,9 @@ function updateitems() {
 	$(".iron-mining-amount").html(ironmining);
 	$(".ibpt").html(ibpt);
     $(".skilllvl").html(skilllvl);
-    $(".thunder-damage").html(20+skilllvl*7);
+    $(".thunder-damage").html(40+skilllvl*7);
     $(".invuln-time").html((3+(skilllvl*3)));
-    $(".upgrade-price").html(skilllvl*skilllvl*500+500);
+    $(".upgrade-price").html(skilllvl*skilllvl*250+250);
 	$(".irontime").html(second2name(ibtime));
 	$(".gold-mining").html(goldmining);
 	$(".gbps").html(gbps);
@@ -112,15 +112,16 @@ function updateitems() {
 	$(".button-enchant-defense").attr("value","Defense "+(enchant_defense+1));
 	$(".button-enchant-life").attr("value","Life "+(enchant_life+1));
 
-	if(enchant_countdown==0) {
-		$(".button-enchant-countdown").attr("value","Countdown 1");
+	if(enchant_countdown==5) {
+		$(".button-enchant-countdown").attr("value","Countdown 5");
 	}
 	else {
 		$(".button-enchant-countdown").attr("disabled","disabled");
-		$(".enchant-sword-countdown").html("Countdown 1 is the highest level of countdown enchantment");
+		$(".enchant-sword-countdown").html("Countdown 5 is the highest level of countdown enchantment");
 	}
 
-	if(enchant_defense==10) { $(".button-enchant-defense").attr("disabled","disabled"); }
+	if(enchant_defense==10) { 
+		$(".button-enchant-defense").attr("disabled","disabled"); }
 	if(enchant_life==10) {
 		$(".button-enchant-life").attr("disabled","disabled");
 		$(".enchant-sword-life").html("Life 10 is the highest level of life enchantment");
@@ -526,7 +527,7 @@ $(document).ready(function() {
 	wob=false;
 	buyfactory=false; //false
 	skill="none"; //"none"
-    skilllvl=0; //0
+  	skilllvl=0; //0
 	additionalattack=0;
 	clickcloudcount=0;
 	openchestcount=0;
@@ -698,11 +699,23 @@ $(document).ready(function() {
 				message="Now I hate you";
 			}
 			else if(openchestcount==7) {
-				message="Oh, no, sorry, the chest is not empty, there are 1000 gold bars hidden inside the chest :D";
-				goldbar+=1000;
+				message="Oh, no, sorry, the chest is not empty, there are 10000 gold bars hidden inside the chest :D";
+				goldbar+=10000;
 			}
-			else if(openchestcount>=8) {
+			else if(openchestcount>=8 && openchestcount <25) {
 				message="The chest is empty now (really)";
+			}else if(openchestcount==25) {
+				message="Okay, please stop opening the chest, really. Nothing else will happen";	
+			}else if(openchestcount==69) {
+				message="Dude, either you knew about this or you have some real dedication";
+				if(goldbar<=69420){
+				goldbar==69420;	
+				}else{
+				goldbar+=69420;
+				}
+			}else if(openchestcount>=70){
+				message="Okay, the chest is actually empty now. I hope you enjoyed this :D"
+				goldbar+=70
 			}
 			$(".alert-chest-empty").remove();
 			makealert("chest-empty","Empty",message,true)
@@ -815,6 +828,7 @@ chestascii='\n\
 		}
 		else {
 			makealert("chest-underground","Chest","The chest is empty, 100% sure",true);
+			goldbar-=1
 		}
 	});
 	$(".pizzas").click(function() {
@@ -831,9 +845,9 @@ chestascii='\n\
 		}
 	});
 	$(".laptop").click(function() {
-		makealert("cookieclicker","Cookie Clicker (not full version)","Play the full game here: <a href='http://orteil.dashnet.org/cookieclicker/' target='_blank'>http://orteil.dashnet.org/cookieclicker/</a><br><br><span style='font-size:20px;'><span class='current-cookie'>"+items[19].owned+"</span> cookie(s)</span><br><span class='cps'>"+cursor/10+" </span> per second<br><br><input type=\"button\" value=\"Bake a cookie\" onclick=\"cookieclicker('bake')\"><br><br><span style='font-size:20px;'>Shop:</span><br><br><input type=\"button\" value=\"Cursor ["+cursor+"]\" onclick=\"alert('This is not the full version of Cookie Clicker, therefore you cant buy cursors')\" class='cursor-button'> (<span class='cursor-price'>"+Math.round(15*Math.pow(1.15,cursor))+"</span> cookies)<br><!--input type=\"button\" value=\"Grandma [0]\" onclick=\"alert('This is not the full version of Cookie Clicker')\"> (100 cookies)00-->",true);
-
-		/*
+		makealert("cookieclicker","Cookie Clicker (not full version)","Play the full game here: <a href='http://orteil.dashnet.org/cookieclicker/' target='_blank'>http://orteil.dashnet.org/cookieclicker/</a><br><br><span style='font-size:20px;'><span class='current-cookie'>"+items[19].owned+"</span> cookie(s)</span><br><span class='cps'>"+cursor/10+" </span> per second<br><br><input type=\"button\" value=\"Bake a cookie\" onclick=\"cookieclicker('bake')\"><br><br><span style='font-size:20px;'>Shop:</span><br><br><input type=\"button\" value=\"Cursor ["+cursor+"]\" onclick=\"cursoraddFunction()" class='cursor-button'> (<span class='cursor-price'>"+Math.round(15*Math.pow(1.15,cursor))+"</span> cookies)<br><input type=\"button\" value=\"Grandma [0]\" onclick=\"alert('This is not the full version of Cookie Clicker')\"> (100 cookies)00>",true);
+		function cursoraddFunction()
+			  /*
 
 			Actually I want to allow you guys to buy cursors,
 			But when I implement it, i got some decimal digit issues like 99985.2000000000002 cookies
@@ -1406,7 +1420,7 @@ man="\n\
 else if(randomspeech==6) {
 man="\n\
                               O\n\
-            No, no pls       /|\\\n\
+              Nah fam        /|\\\n\
                               |\n\
                              / \\";
 }
@@ -1462,12 +1476,12 @@ function eatpizza() {
 		eaten=randomnumber(10,50);
 		items[3].owned+=eaten;
 		checkthings();
-		pizzaeaten=true;
+		pizzaeaten=false;
 	}
 	else {
 		makealert("pizzas-rotten","Nom.. nom..","You eat the pizzas, but... they are rotten!<br>You are poisoned, this causes you to die easily in battles even if you have a lot of hp<br><br>Luckily you can heal yourself by drinking 10 health potions<br><br><input type=\"button\" value=\"Drink 10 health potions\" onclick=\"healme()\">",true);
 		poisoned=true;
-		pizzaeaten=true;
+		pizzaeaten=false;
 	}
 }
 function healme() {
@@ -1493,7 +1507,8 @@ function cookieclicker(action) {
 function vsinvisiblebot() {
 	closemessage();
 	powerhp();
-	battle=makebattle(Math.round(Math.random()*100),"Invisible Bot",300,300,"Invisible Sword",30,"An invisible bot",9,power,hp,hp,currentsword,false,"vs-invisible-bot");
+	//makebattle(id,name,hp,maxhp,weapon,damage,description,enemyascii,power,myhp,mymaxhp,myweapon,loop,param
+	battle=makebattle(Math.round(Math.random()*100),"Invisible Bot",300,300,"Invisible Sword",50,"An invisible bot",9,power,hp,hp,currentsword,false,"vs-invisible-bot");
 	html="<div class=\"alert alert-battle-invisible-bot\"><b>Invisible Bot</b><br>Here is the invisible bot, good luck!<br><br>"+battle.html+"</div>";
 	$("#otheralerts").append(html);
 	battle.init();
@@ -1637,7 +1652,7 @@ computer="                                            _________________\n\
 }
 
 function searchsand() {
-	random=randomnumber(1,20*searchtimes);
+	random=randomnumber(1,20);
 	if(random==10) {
 		r=randomnumber(100,1000);
 		goldbar+=r;
@@ -2749,7 +2764,10 @@ chest='\n\
 	}
 	else if(param=="vs-invisible-bot"){
 		if(defeatinvisiblebot) {
-			makealert("no-more-items","No more items :(","Sorry, I have no more items to give you :(",true);
+			makealert("again","You broke the robot again","Thanks for breaking the robot >:(",true);
+			goldbar+=goldbar*1+(hp*hp);
+			ironbar+=(goldbar+ironbar)/hp);
+			
 		}
 		else {
 			defeatinvisiblebot=true;
@@ -3092,7 +3110,7 @@ function ciphercode() {
 function battlevsrats() {
 	if(items[2].owned!=0) {
 		powerhp();
-		hpdivide=Math.ceil(hp/4.5);
+		divide=Math.ceil(hp/4.5);
 		battle=makebattle(Math.round(Math.random()*100),"A Rat",hp-hpdivide,hp-hpdivide,"Their body",power-Math.ceil(power/2.5),"An annoying rat",11,power,hp,hp,currentsword,false,"vs-rat");
 		html="<div class=\"alert alert-battle-rats\"><b>Rat!</b><br>Kill it!!<br><br>"+battle.html+"</div>";
 		$("#otheralerts").append(html);
