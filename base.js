@@ -2765,8 +2765,8 @@ chest='\n\
 	else if(param=="vs-invisible-bot"){
 		if(defeatinvisiblebot) {
 			makealert("again","You broke the robot again","Thanks for breaking the robot >:(",true);
-			goldbar+=goldbar*1+(hp*hp);
-			ironbar+=(goldbar+ironbar)/hp);
+			goldbar+=goldbar*1.25;
+			ironbar+=ironbar*1.5;
 			
 		}
 		else {
